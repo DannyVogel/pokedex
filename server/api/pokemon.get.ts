@@ -1,15 +1,14 @@
 import type { PokemonApiResponse, PokemonDetailResponse } from "~/types/common";
 
 export default defineEventHandler(async (event) => {
-  console.log("hi");
   const { page, pageSize } = getQuery(event);
-
+  const offset = (Number(page) - 1) * Number(pageSize);
   const pokemon = await $fetch<PokemonApiResponse>(
     "https://pokeapi.co/api/v2/pokemon",
     {
       query: {
         limit: pageSize,
-        offset: Number(page) * Number(pageSize),
+        offset,
       },
     }
   );
