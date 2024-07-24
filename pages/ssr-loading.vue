@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import type { Pokemon } from "~/types/common";
 
+useHead({
+  title: "SSR Loader - Pokedex",
+});
+
 const isLoading = ref(false);
 const isLoadingMore = ref(false);
 const page = ref(1);
@@ -51,7 +55,8 @@ useInfiniteScroll(
       <li v-for="pokemon in pokemonList" :key="pokemon.id">
         <BaseLayoutCard>
           <div class="flex flex-col items-center gap-2">
-            <h1 class="text-3xl italic">{{ pokemon.name }}</h1>
+            <h1 class="text-3xl italic font-semibold">{{ pokemon.name }}</h1>
+            <p class="text-sm">#{{ pokemon.id }}</p>
             <img
               :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`"
               :alt="pokemon.name"
