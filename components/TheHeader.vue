@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="mt-10 w-full px-6 flex gap-10">
+  <div class="mt-10 w-full px-6 flex justify-center gap-10">
     <NuxtLink
       to="/"
       class="hover:text-red-400"
