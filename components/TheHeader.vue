@@ -1,7 +1,7 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="mt-10 w-full px-10 flex gap-10">
+  <div class="mt-10 w-full px-6 flex gap-10">
     <NuxtLink
       to="/"
       class="hover:text-red-400"
@@ -19,7 +19,7 @@
       class="hover:text-red-400"
       active-class="text-red-400 underline"
     >
-      SSR with Loading
+      Loading SSR
     </NuxtLink>
     <NuxtLink
       to="/csr"
