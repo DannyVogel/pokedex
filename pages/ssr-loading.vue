@@ -15,7 +15,7 @@ const pokemonList = ref<Pokemon[]>([]);
 const { execute } = await useLazyFetch("/api/pokemon", {
   query: {
     page,
-    pageSize: 12,
+    pageSize: 100,
   },
   onRequest({ request, options }) {
     if (page.value === 1) {
