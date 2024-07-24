@@ -2,7 +2,7 @@
 import type { Pokemon } from "~/types/common";
 
 useHead({
-  title: "SSR - Pokedex",
+  title: "SSR - Pokédex",
 });
 
 const isLoading = ref(false);

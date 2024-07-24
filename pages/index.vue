@@ -4,7 +4,7 @@ import { version } from "~/package.json";
 
 <template>
   <div class="flex flex-col gap-10 items-center">
-    <h1 class="text-5xl text-rose-700 font-bold text-center">Pokedex</h1>
+    <h1 class="text-5xl text-rose-700 font-bold text-center">Pokédex</h1>
     <h1 class="text-rose-700 font-bold text-center">
       A rendering mode comparison site
     </h1>
