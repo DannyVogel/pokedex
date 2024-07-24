@@ -21,6 +21,7 @@ const { execute } = await useLazyFetch("/api/pokemon", {
     page,
     pageSize: 100,
   },
+  cache: "no-cache",
   onRequest({ request, options }) {
     if (page.value === 1) {
       startTime.value = performance.now();

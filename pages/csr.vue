@@ -16,11 +16,12 @@ const duration = computed(() => {
 });
 const pokemonList = ref<Pokemon[]>([]);
 
-const { execute } = await useFetch("/api/pokemon", {
+const { execute } = await useLazyFetch("/api/pokemon", {
   query: {
     page,
     pageSize: 100,
   },
+  cache: "no-cache",
   onRequest({ request, options }) {
     if (page.value === 1) {
       startTime.value = performance.now();
