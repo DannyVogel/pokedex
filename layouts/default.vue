@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative min-h-screen h-full flex flex-col items-center overflow-x-hidden"
+    class="relative min-h-screen h-full flex flex-col items-center overflow-x-hidden bg-slate-200"
   >
     <TheHeader />
     <main
