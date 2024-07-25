@@ -26,31 +26,37 @@ const doSearch = () => {
     Loading...
   </div>
   <div v-else class="flex justify-center">
-    <BaseLayoutCard>
-      <template #name>{{ pokemon.name }}</template>
-      <template #id>#{{ pokemon.id }}</template>
-      <template #image>
-        <img
-          :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`"
-          :alt="pokemon.name"
-          class="w-32 h-32"
-        />
-      </template>
-      <template #characteristics>
-        <p>Height: {{ pokemon.height }} m</p>
-        <p>Weight: {{ pokemon.weight }} kg</p>
-      </template>
-      <template #type>
-        <template v-for="type in pokemon.types" :key="type">
-          <p
-            class="rounded-full px-2 py-1 text-white font-semibold"
-            :class="typeColor(type)"
-          >
-            {{ type }}
-          </p>
+    <NuxtLink
+      v-if="pokemon"
+      :to="`https://bulbapedia.bulbagarden.net/wiki/${pokemon.name}_(Pok%C3%A9mon)`"
+      target="_blank"
+    >
+      <BaseLayoutCard>
+        <template #name>{{ pokemon.name }}</template>
+        <template #id>#{{ pokemon.id }}</template>
+        <template #image>
+          <img
+            :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`"
+            :alt="pokemon.name"
+            class="w-32 h-32"
+          />
         </template>
-      </template>
-    </BaseLayoutCard>
+        <template #characteristics>
+          <p>Height: {{ pokemon.height }} m</p>
+          <p>Weight: {{ pokemon.weight }} kg</p>
+        </template>
+        <template #type>
+          <template v-for="type in pokemon.types" :key="type">
+            <p
+              class="rounded-full px-2 py-1 text-white font-semibold"
+              :class="typeColor(type)"
+            >
+              {{ type }}
+            </p>
+          </template>
+        </template>
+      </BaseLayoutCard>
+    </NuxtLink>
   </div>
   <div class="relative flex items-center justify-center mt-10">
     <form @submit.prevent="doSearch">
