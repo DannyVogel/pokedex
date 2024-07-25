@@ -3,6 +3,13 @@ import { version } from "~/package.json";
 
 const results = ref("");
 const options = [12, 50, 100];
+const query = ref("");
+const isLoading = ref(false);
+
+const doSearch = () => {
+  isLoading.value = true;
+  navigateTo(`/search/${query.value}`);
+};
 </script>
 
 <template>
@@ -34,7 +41,10 @@ const options = [12, 50, 100];
       </NuxtLink>
     </div>
   </div>
-  <div class="my-10 flex justify-center gap-2 text-sm font-semibold">
+  <div
+    class="my-10 flex items-center justify-center gap-2 text-sm font-semibold"
+  >
+    <p>Show ordered list:</p>
     <select
       v-model="results"
       placeholder="Select one"
@@ -43,6 +53,23 @@ const options = [12, 50, 100];
       <option disabled value="">Set result amount</option>
       <option v-for="option in options">{{ option }}</option>
     </select>
+  </div>
+  <div class="relative flex items-center justify-center">
+    <form @submit.prevent="doSearch">
+      <input
+        type="text"
+        :disable="isLoading"
+        v-model="query"
+        placeholder="Search for a Pokémon"
+        class="bg-blue-100 border border-r-0 border-blue-200 p-1 flex-grow"
+      />
+      <button
+        :disable="isLoading"
+        class="bg-blue-100 border border-blue-200 py-1 px-2 flex-1 hover:text-rose-700"
+      >
+        Search
+      </button>
+    </form>
   </div>
   <p class="mt-20 text-center text-xs">v{{ version }}</p>
 </template>
