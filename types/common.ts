@@ -5,9 +5,7 @@ export interface Pokemon {
   weight: number;
   abilities: string[];
   types: string[];
-  sprite: {
-    front_default: string;
-  };
+  sprite: string;
 }
 
 export interface PokemonApiResponse {
