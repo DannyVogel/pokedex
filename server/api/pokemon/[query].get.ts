@@ -3,7 +3,7 @@ import type { PokemonDetailResponse } from "~/types/common";
 export default defineEventHandler(async (event) => {
   const query = getRouterParam(event, "query");
   const results = await $fetch<PokemonDetailResponse>(
-    `https://pokeapi.co/api/v2/pokemon/${query}`,
+    `https://pokeapi.co/api/v2/pokemon/${query?.toLowerCase()}`,
     {
       query: {
         limit: 12,
