@@ -8,6 +8,7 @@ useHead({
 const isLoading = ref(false);
 const isLoadingMore = ref(false);
 const page = ref(1);
+const pageSize = useRouteQuery("results", 12);
 const startTime = ref();
 const endTime = ref();
 const duration = computed(() => {
@@ -19,7 +20,7 @@ const pokemonList = ref<Pokemon[]>([]);
 const { execute } = await useFetch("/api/pokemon", {
   query: {
     page,
-    pageSize: 100,
+    pageSize,
   },
   cache: "no-cache",
   onRequest({ request, options }) {

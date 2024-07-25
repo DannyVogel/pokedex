@@ -9,20 +9,26 @@
       >Home
     </NuxtLink>
     <NuxtLink
-      to="/ssr"
+      :to="`/ssr${
+        $route.query.results ? `?results=${$route.query.results}` : ''
+      }`"
       class="hover:text-red-400"
       active-class="text-red-400 underline"
       >SSR
     </NuxtLink>
     <NuxtLink
-      to="/ssr-loading"
+      :to="`/ssr-loading${
+        $route.query.results ? `?results=${$route.query.results}` : ''
+      }`"
       class="hover:text-red-400"
       active-class="text-red-400 underline"
     >
       Loading SSR
     </NuxtLink>
     <NuxtLink
-      to="/csr"
+      :to="`/csr${
+        $route.query.results ? `?results=${$route.query.results}` : ''
+      }`"
       class="hover:text-red-400"
       active-class="text-red-400 underline"
       >CSR
