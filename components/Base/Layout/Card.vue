@@ -14,7 +14,6 @@
         <slot name="characteristics" />
       </div>
       <div class="flex gap-2">
-        <p class="rounded-full px-2 py-1 text-white font-semibold"></p>
         <slot name="type" />
       </div>
     </div>
