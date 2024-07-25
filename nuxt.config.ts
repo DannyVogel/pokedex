@@ -8,4 +8,8 @@ export default defineNuxtConfig({
       ssr: false,
     },
   },
+  css: ["~/assets/css/tailwind.css"],
+  tailwindcss: {
+    configPath: "~/config/tailwind.ts",
+  },
 });

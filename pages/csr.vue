@@ -48,6 +48,10 @@ useInfiniteScroll(
   },
   { distance: 5, canLoadMore: () => !isLoading.value && !isLoadingMore.value }
 );
+
+const typeColor = (type: string) => {
+  return `bg-${type.toLowerCase()}`;
+};
 </script>
 
 <template>
@@ -71,7 +75,7 @@ useInfiniteScroll(
             </div>
             <div class="flex gap-2">
               <template v-for="type in pokemon.types" :key="type">
-                <p class="bg-gray-200 rounded-full px-2 py-1">
+                <p class="rounded-full px-2 py-1" :class="typeColor(type)">
                   {{ type }}
                 </p>
               </template>
