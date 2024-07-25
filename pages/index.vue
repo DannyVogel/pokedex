@@ -5,10 +5,21 @@ const results = ref("");
 const options = [12, 50, 100];
 const query = ref("");
 const isLoading = ref(false);
+const showCard = ref(false);
 
 const doSearch = () => {
   isLoading.value = true;
   navigateTo(`/search/${query.value}`);
+};
+
+const { data: pokemon, execute } = await useLazyFetch(
+  "/api/pokemon/random",
+  {}
+);
+
+const playAgain = () => {
+  showCard.value = false;
+  execute();
 };
 </script>
 
@@ -18,7 +29,18 @@ const doSearch = () => {
     <h1 class="text-rose-700 font-bold text-center">
       A rendering mode comparison site
     </h1>
-    <img src="/pokeball.svg" alt="pokeball" class="w-40 h-40" />
+    <div class="group flex items-center justify-center w-1/2 py-10 flex-1">
+      <Transition mode="out-in">
+        <img
+          v-if="!showCard"
+          @click="showCard = !showCard"
+          src="/pokeball.svg"
+          alt="pokeball"
+          class="w-40 h-40 group-hover:animate-bounce hover:animate-bounce cursor-pointer"
+        />
+        <FlipCard v-else-if="pokemon" :pokemon="pokemon" @refresh="playAgain" />
+      </Transition>
+    </div>
 
     <div class="flex gap-2">
       <NuxtLink
@@ -73,3 +95,15 @@ const doSearch = () => {
   </div>
   <p class="mt-20 text-center text-xs">v{{ version }}</p>
 </template>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.2s ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+</style>
