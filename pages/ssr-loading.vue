@@ -60,26 +60,29 @@ const typeColor = (type: string) => {
     <template #list-items>
       <li v-for="pokemon in pokemonList" :key="pokemon.id">
         <BaseLayoutCard>
-          <div class="flex flex-col items-center gap-2">
-            <h1 class="text-3xl italic font-semibold">{{ pokemon.name }}</h1>
-            <p class="text-sm">#{{ pokemon.id }}</p>
+          <template #name>{{ pokemon.name }}</template>
+          <template #id>#{{ pokemon.id }}</template>
+          <template #image>
             <img
               :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`"
               :alt="pokemon.name"
               class="w-32 h-32"
             />
-            <div class="flex gap-2">
-              <p>Height: {{ pokemon.height }} m</p>
-              <p>Weight: {{ pokemon.weight }} kg</p>
-            </div>
-            <div class="flex gap-2">
-              <template v-for="type in pokemon.types" :key="type">
-                <p class="rounded-full px-2 py-1" :class="typeColor(type)">
-                  {{ type }}
-                </p>
-              </template>
-            </div>
-          </div>
+          </template>
+          <template #characteristics>
+            <p>Height: {{ pokemon.height }} m</p>
+            <p>Weight: {{ pokemon.weight }} kg</p>
+          </template>
+          <template #type>
+            <template v-for="type in pokemon.types" :key="type">
+              <p
+                class="rounded-full px-2 py-1 text-white font-semibold"
+                :class="typeColor(type)"
+              >
+                {{ type }}
+              </p>
+            </template>
+          </template>
         </BaseLayoutCard>
       </li>
     </template>

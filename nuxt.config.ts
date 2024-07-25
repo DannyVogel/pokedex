@@ -9,7 +9,4 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/css/tailwind.css"],
-  tailwindcss: {
-    configPath: "~/config/tailwind.ts",
-  },
 });
