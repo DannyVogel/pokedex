@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import type { Pokemon } from "~/types/common";
-
 useHead({
   title: "CSR - Pokédex",
 });
