@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { version } from "~/package.json";
+import { version } from "../../package.json";
 
 const results = ref("");
 const options = [12, 50, 100];

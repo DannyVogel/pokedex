@@ -22,6 +22,7 @@ const { data: pokemonList, status } = await useAsyncData(
   "csrFetch",
   async () => {
     resetPerformance();
+    console.log("Fetching Pokémon data...");
     const response = await fetchPokemon(page.value, pageSize.value);
     if (page.value === 1) endTime.value = performance.now();
     console.log("Timer ended.");
@@ -55,6 +56,14 @@ useInfiniteScroll(
 const typeColor = (type: string) => {
   return `bg-${type.toLowerCase()}`;
 };
+
+watch(
+  () => status.value,
+  (newStatus) => {
+    if (status.value === "success") endTime.value = performance.now();
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
