@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import type { Pokemon } from "~/types/common";
-
 const emit = defineEmits(["refresh"]);
 defineProps<{ pokemon: Pokemon }>();
 const flip = ref(false);
