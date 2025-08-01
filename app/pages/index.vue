@@ -36,7 +36,7 @@ const playAgain = () => {
           @click="showCard = !showCard"
           src="/pokeball.svg"
           alt="pokeball"
-          class="w-40 h-40 group-hover:animate-bounce hover:animate-bounce cursor-pointer"
+          class="w-40 h-40 group-hover:animate-spin hover:animate-spin cursor-pointer"
         />
         <FlipCard v-else-if="pokemon" :pokemon="pokemon" @refresh="playAgain" />
       </Transition>

@@ -12,14 +12,16 @@ const playAgain = () => {
 </script>
 
 <template>
-  <div v-if="pokemon" class="flip-card my-20">
+  <div v-if="pokemon" class="flip-card my-20" @click="flip = !flip">
     <div :class="`flip-card-inner ${flip ? 'flipped' : null}`">
-      <div :class="`flip-card-front ${flip ? 'flipped' : null} cursor-pointer`">
+      <div
+        :class="`flip-card-front ${
+          flip ? 'flipped' : null
+        } cursor-pointer transition-transform duration-500`"
+      >
         <BaseLayoutCard>
           <template #image>
-            <h1 class="text-lg font-bold" @click="flip = !flip">
-              Who's That Pokemon?
-            </h1>
+            <h1 class="text-lg font-bold">Who's That Pokemon?</h1>
             <img
               :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`"
               :alt="pokemon.name"
@@ -28,7 +30,9 @@ const playAgain = () => {
           </template>
         </BaseLayoutCard>
       </div>
-      <div class="flip-card-back cursor-pointer">
+      <div
+        class="flip-card-back cursor-pointer transition-transform duration-500"
+      >
         <BaseLayoutCard>
           <template #image>
             <NuxtLink :to="`/search/${pokemon.name}`">
