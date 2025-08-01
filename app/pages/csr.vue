@@ -22,10 +22,8 @@ const { data: pokemonList, status } = await useAsyncData(
   "csrFetch",
   async () => {
     resetPerformance();
-    console.log("Fetching Pokémon data...");
     const response = await fetchPokemon(page.value, pageSize.value);
     if (page.value === 1) endTime.value = performance.now();
-    console.log("Timer ended.");
     isLoadingMore.value = false;
     return response;
   },
