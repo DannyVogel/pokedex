@@ -1,46 +1,60 @@
 <script lang="ts" setup>
-const emit = defineEmits(["refresh"]);
-defineProps<{ pokemon: Pokemon }>();
-const flip = ref(false);
+const emit = defineEmits<{
+  (e: "refresh"): void;
+}>();
+
+defineProps<{
+  pokemon: Pokemon;
+}>();
+
+const isFlipped = ref(false);
 
 const playAgain = () => {
-  flip.value = false;
+  isFlipped.value = false;
   emit("refresh");
 };
 </script>
 
 <template>
-  <div v-if="pokemon" class="flip-card my-20" @click="flip = !flip">
-    <div :class="`flip-card-inner ${flip ? 'flipped' : null}`">
+  <div v-if="pokemon" class="flip-card my-20">
+    <div :class="['flip-card-inner', { 'is-flipped': isFlipped }]">
       <div
-        :class="`flip-card-front ${
-          flip ? 'flipped' : null
-        } cursor-pointer transition-transform duration-500`"
+        class="flip-card-front cursor-pointer"
+        @click="isFlipped = !isFlipped"
       >
         <BaseLayoutCard>
           <template #image>
-            <h1 class="text-lg font-bold">Who's That Pokemon?</h1>
-            <img
-              :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`"
-              :alt="pokemon.name"
-              class="w-32 h-32 contrast-0"
-            />
+            <div class="min-w-64 flex flex-col items-center justify-center">
+              <h1 class="text-lg font-bold">Who's That Pokemon?</h1>
+              <img
+                :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`"
+                :alt="pokemon.name"
+                class="w-32 h-32 contrast-0"
+              />
+            </div>
           </template>
         </BaseLayoutCard>
       </div>
-      <div
-        class="flip-card-back cursor-pointer transition-transform duration-500"
-      >
+      <div class="flip-card-back min-w-64">
         <BaseLayoutCard>
           <template #image>
-            <NuxtLink :to="`/search/${pokemon.name}`">
+            <NuxtLink
+              :to="`/search/${pokemon.name}`"
+              class="min-w-64 flex flex-col items-center justify-center"
+            >
               <h1 class="text-lg font-bold">It's {{ pokemon.name }}!</h1>
               <img
                 :src="`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`"
+                :alt="pokemon.name"
                 class="w-32 h-32"
               />
             </NuxtLink>
-            <p class="text-green-500 mt-2" @click="playAgain">Play again</p>
+            <p
+              class="text-green-500 mt-2 cursor-pointer"
+              @click.stop="playAgain"
+            >
+              Play again
+            </p>
           </template>
         </BaseLayoutCard>
       </div>
@@ -49,19 +63,17 @@ const playAgain = () => {
 </template>
 
 <style scoped>
+/*
+  Use a more generic background for better compatibility and to avoid
+  relying on complex linear gradients. A simple solid or subtle gradient
+  will work on all browsers.
+*/
 .flip-card {
   background-color: transparent;
   width: 100%;
   height: 100%;
-  perspective: 1000px;
+  perspective: 1000px; /* Establishes a 3D perspective */
   font-family: sans-serif;
-}
-
-.title {
-  font-size: 1.5em;
-  font-weight: 900;
-  text-align: center;
-  margin: 0;
 }
 
 .flip-card-inner {
@@ -70,10 +82,11 @@ const playAgain = () => {
   height: 100%;
   text-align: center;
   transition: transform 0.8s;
-  transform-style: preserve-3d;
+  transform-style: preserve-3d; /* Key for 3D flip effect */
 }
 
-.flip-card-inner.flipped {
+/* Class to trigger the flip animation */
+.flip-card-inner.is-flipped {
   transform: rotateY(180deg);
 }
 
@@ -81,37 +94,26 @@ const playAgain = () => {
 .flip-card-back {
   box-shadow: 0 8px 14px 0 rgba(0, 0, 0, 0.2);
   position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   width: 100%;
   height: 100%;
+  /* This is crucial for hiding the back of the card when it's not flipped */
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  /* border: 1px solid coral;
-  border-radius: 1rem; */
+  border-radius: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 100%;
 }
 
 .flip-card-front {
-  /* background: linear-gradient(
-    120deg,
-    bisque 60%,
-    rgb(255, 231, 222) 88%,
-    rgb(255, 211, 195) 40%,
-    rgba(255, 127, 80, 0.603) 48%
-  ); */
-  color: rosybrown;
+  background-color: #f8e5d6; /* A neutral, light background */
+  color: #8c5a4d;
 }
 
 .flip-card-back {
-  /* background: linear-gradient(
-    120deg,
-    rgb(255, 174, 145) 30%,
-    coral 88%,
-    bisque 40%,
-    rgb(255, 185, 160) 78%
-  ); */
-  color: orange;
-  transform: rotateY(180deg);
+  background-color: #fca366; /* A slightly darker background for the back */
+  color: white;
+  transform: rotateY(180deg); /* Positions the back side correctly */
 }
 </style>
