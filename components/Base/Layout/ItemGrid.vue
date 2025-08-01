@@ -1,6 +1,5 @@
 <template>
   <div class="mt-7">
-    <slot name="components" />
     <div class="mt-6 w-full">
       <ul
         role="list"

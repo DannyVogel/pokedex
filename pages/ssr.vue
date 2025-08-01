@@ -9,41 +9,37 @@ const isLoading = ref(false);
 const isLoadingMore = ref(false);
 const page = ref(1);
 const pageSize = useRouteQuery("results", 12);
-const startTime = ref();
-const endTime = ref();
-const duration = computed(() => {
-  const milliseconds = endTime.value - startTime.value;
-  return (milliseconds / 1000).toFixed(2);
-});
-const pokemonList = ref<Pokemon[]>([]);
+const { startTime, endTime, calculateDuration, resetPerformance } =
+  usePerformance();
+const { fetchPokemon } = useApiFetch();
 
-const { execute } = await useFetch("/api/pokemon", {
-  query: {
-    page,
-    pageSize,
-  },
-  cache: "no-cache",
-  onRequest({ request, options }) {
-    if (page.value === 1) {
-      startTime.value = performance.now();
-      isLoading.value = true;
-    } else {
-      isLoadingMore.value = true;
-    }
-  },
-  onResponse({ response }) {
+const { data: pokemonList } = await useAsyncData(
+  "ssrFetch",
+  async () => {
+    resetPerformance();
+    isLoading.value = true;
+    if (page.value === 1) startTime.value = performance.now();
+    const response = await fetchPokemon(page.value, pageSize.value);
     if (page.value === 1) endTime.value = performance.now();
-    pokemonList.value.push(...response._data);
     isLoading.value = false;
     isLoadingMore.value = false;
+    return response;
   },
-});
+  {
+    default() {
+      return [] as Pokemon[];
+    },
+  }
+);
 
 useInfiniteScroll(
   window,
-  () => {
+  async () => {
     page.value++;
-    execute();
+    isLoadingMore.value = true;
+    const response = await fetchPokemon(page.value, pageSize.value);
+    pokemonList.value.push(...response);
+    isLoadingMore.value = false;
   },
   { distance: 5, canLoadMore: () => !isLoading.value && !isLoadingMore.value }
 );
@@ -54,7 +50,7 @@ const typeColor = (type: string) => {
 </script>
 
 <template>
-  <p v-if="!isLoading">Loaded in: {{ duration }} seconds!</p>
+  <p v-if="!isLoading">Loaded in: {{ calculateDuration() }} seconds!</p>
   <div v-if="isLoading" class="animate-pulse">Loading...</div>
   <BaseLayoutItemGrid v-else>
     <template #list-items>
